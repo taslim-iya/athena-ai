@@ -1,63 +1,58 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-:root {
-  --bg: #ffffff;
-  --bg-2: #f7f7fa;
-  --surface: #ffffff;
-  --surface-2: #f0f0f5;
-  --surface-3: #e8e8ef;
-  --border: #e2e2ea;
-  --border-subtle: #f0f0f5;
-  --text: #0a1628;
-  --text-2: #525866;
-  --text-3: #8b8fa3;
-  --accent: #635bff;
-  --accent-hover: #7a73ff;
-  --accent-2: #00d4aa;
-  --accent-3: #ff6b6b;
-  --gradient-text: linear-gradient(135deg, #635bff 0%, #e44ced 50%, #ff7a45 100%);
+@layer base {
+  :root {
+    --bg: #ffffff;
+    --bg-2: #f7f7fa;
+    --surface: #ffffff;
+    --surface-2: #f0f0f5;
+    --surface-3: #e8e8ef;
+    --border: #e2e2ea;
+    --border-subtle: #f0f0f5;
+    --text: #0a1628;
+    --text-2: #525866;
+    --text-3: #8b8fa3;
+    --accent: #635bff;
+    --accent-hover: #7a73ff;
+    --accent-glow: rgba(99, 91, 255, 0.08);
+    --accent-2: #00d4aa;
+    --accent-3: #ff6b6b;
+    --gradient-text: linear-gradient(135deg, #635bff 0%, #e44ced 50%, #ff7a45 100%);
+    --gradient-subtle: #f7f7fa;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection { background: rgba(99, 91, 255, 0.15); }
+  input::placeholder, textarea::placeholder { color: var(--text-3); }
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+@layer components {
+  .gradient-text {
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  .hero-gradient {
+    background: linear-gradient(135deg, #a78bfa 0%, #ec4899 25%, #f97316 50%, #fbbf24 75%, #6ee7b7 100%);
+  }
+
+  .mono { font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace; }
 }
 
-.gradient-text {
-  background: var(--gradient-text);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+@layer base {
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-3); }
 }
-
-.hero-gradient {
-  background: linear-gradient(135deg, #a78bfa 0%, #ec4899 25%, #f97316 50%, #fbbf24 75%, #6ee7b7 100%);
-}
-
-.mono { font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace; }
-
-::selection { background: rgba(99, 91, 255, 0.15); }
-
-input::placeholder, textarea::placeholder { color: var(--text-3); }
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-
-@keyframes counter {
-  from { --num: 0; }
-  to { --num: 100; }
-}
-
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--text-3); }
