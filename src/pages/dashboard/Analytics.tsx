@@ -2,7 +2,7 @@ import { useAppStore } from '@/store/appStore';
 import { BarChart3, TrendingUp, Eye, MousePointer, DollarSign, ArrowUpRight, Users, Globe, Search, Share2, Mail, Target } from 'lucide-react';
 
 function Card({ children, className = '' }: { children: React.ReactNode; className?: string }) {
-  return <div className={`rounded-xl p-5 ${className}`} style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>{children}</div>;
+  return <div className={`rounded-xl p-5 ${className}`} style={{ background: 'var(--bg)', border: '1px solid var(--border)' }}>{children}</div>;
 }
 
 export default function Analytics() {
@@ -34,8 +34,8 @@ export default function Analytics() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>Analytics</h1>
-        <p className="text-sm mt-1" style={{ color: 'var(--text-2)' }}>Cross-channel performance overview</p>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>Analytics</h1>
+        <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>Cross-channel performance overview</p>
       </div>
 
       <div className="grid grid-cols-4 gap-3 mb-6">
@@ -47,10 +47,10 @@ export default function Analytics() {
         ].map(s => (
           <Card key={s.label}>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs" style={{ color: 'var(--text-3)' }}>{s.label}</span>
+              <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>{s.label}</span>
               <s.icon size={14} style={{ color: s.color }} />
             </div>
-            <p className="text-xl font-bold" style={{ color: 'var(--text)' }}>{s.value}</p>
+            <p className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>{s.value}</p>
             <p className="text-xs mt-1 flex items-center gap-0.5" style={{ color: '#00D4AA' }}>
               <ArrowUpRight size={10} /> {s.change}
             </p>
@@ -61,7 +61,7 @@ export default function Analytics() {
       <div className="grid grid-cols-[1fr_380px] gap-6">
         {/* Chart */}
         <Card>
-          <h3 className="text-sm font-semibold mb-6" style={{ color: 'var(--text)' }}>Weekly Traffic</h3>
+          <h3 className="text-sm font-semibold mb-6" style={{ color: 'var(--text-primary)' }}>Weekly Traffic</h3>
           <div className="flex items-end gap-3 h-48">
             {weeklyData.map(d => (
               <div key={d.day} className="flex-1 flex flex-col items-center gap-2">
@@ -69,7 +69,7 @@ export default function Analytics() {
                   height: `${(d.sessions / maxSessions) * 160}px`,
                   background: 'linear-gradient(180deg, var(--accent) 0%, rgba(124,92,252,0.3) 100%)',
                 }} />
-                <span className="text-xs" style={{ color: 'var(--text-3)' }}>{d.day}</span>
+                <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>{d.day}</span>
               </div>
             ))}
           </div>
@@ -77,22 +77,22 @@ export default function Analytics() {
 
         {/* Channel breakdown */}
         <Card>
-          <h3 className="text-sm font-semibold mb-4" style={{ color: 'var(--text)' }}>Channel Breakdown</h3>
+          <h3 className="text-sm font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Channel Breakdown</h3>
           <div className="space-y-3">
             {channels.map(c => (
               <div key={c.name}>
                 <div className="flex items-center justify-between mb-1">
                   <div className="flex items-center gap-2">
                     <c.icon size={12} style={{ color: c.color }} />
-                    <span className="text-xs font-medium" style={{ color: 'var(--text)' }}>{c.name}</span>
+                    <span className="text-xs font-medium" style={{ color: 'var(--text-primary)' }}>{c.name}</span>
                   </div>
                   <span className="text-xs" style={{ color: '#00D4AA' }}>{c.change}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="flex-1 h-2 rounded-full" style={{ background: 'var(--surface-2)' }}>
+                  <div className="flex-1 h-2 rounded-full" style={{ background: 'var(--bg-alt)' }}>
                     <div className="h-full rounded-full" style={{ width: `${(c.sessions / totalSessions) * 100}%`, background: c.color }} />
                   </div>
-                  <span className="text-xs w-16 text-right" style={{ color: 'var(--text-3)' }}>{c.sessions.toLocaleString()}</span>
+                  <span className="text-xs w-16 text-right" style={{ color: 'var(--text-tertiary)' }}>{c.sessions.toLocaleString()}</span>
                 </div>
               </div>
             ))}

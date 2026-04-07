@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '@/store/appStore';
-import { Globe, Loader2, CheckCircle, Sparkles, Search, Brain, Target, BarChart3, Calendar } from 'lucide-react';
+import { Globe, Loader2, CheckCircle, Sparkles, Search, Brain, Target, BarChart3, Calendar, ArrowRight } from 'lucide-react';
 
 const STEPS = [
   { icon: Globe, label: 'Crawling your website', duration: 1200 },
   { icon: Sparkles, label: 'Extracting brand identity', duration: 1000 },
   { icon: Search, label: 'Analysing competitors', duration: 1400 },
   { icon: Brain, label: 'Researching keywords', duration: 1100 },
-  { icon: Target, label: 'Building marketing strategy', duration: 1300 },
+  { icon: Target, label: 'Building strategy', duration: 1300 },
   { icon: Calendar, label: 'Generating content calendar', duration: 900 },
 ];
 
@@ -17,70 +17,77 @@ export default function Onboarding() {
   const { updateConfig } = useAppStore();
   const [url, setUrl] = useState('');
   const [phase, setPhase] = useState<'input' | 'analysing' | 'done'>('input');
-  const [stepIdx, setStepIdx] = useState(0);
+  const [step, setStep] = useState(0);
 
   useEffect(() => {
     if (phase !== 'analysing') return;
-    if (stepIdx >= STEPS.length) { setPhase('done'); return; }
-    const t = setTimeout(() => setStepIdx(s => s + 1), STEPS[stepIdx].duration);
+    if (step >= STEPS.length) { setPhase('done'); return; }
+    const t = setTimeout(() => setStep(s => s + 1), STEPS[step].duration);
     return () => clearTimeout(t);
-  }, [phase, stepIdx]);
+  }, [phase, step]);
 
   const start = () => {
     if (!url.trim()) return;
-    const clean = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
-    updateConfig({ businessUrl: url, businessName: clean.split('.')[0].charAt(0).toUpperCase() + clean.split('.')[0].slice(1) });
+    const host = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+    const name = host.split('.')[0];
+    updateConfig({ businessUrl: url, businessName: name.charAt(0).toUpperCase() + name.slice(1) });
     setPhase('analysing');
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-5" style={{ background: 'var(--bg)' }}>
-      <div className="w-full max-w-lg">
+    <div className="min-h-screen flex items-center justify-center px-6" style={{ background: 'var(--bg)' }}>
+      <div className="w-full max-w-md">
         {phase === 'input' && (
-          <div className="text-center">
-            <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-6" style={{ background: 'var(--accent)' }}>
-              <Sparkles size={20} className="text-white" />
+          <>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center mx-auto mb-5" style={{ background: 'var(--accent)' }}>
+              <Sparkles size={18} color="#fff" />
             </div>
-            <h1 className="text-2xl md:text-3xl font-bold mb-2" style={{ color: 'var(--text)' }}>Let's analyse your brand</h1>
-            <p className="text-sm mb-8" style={{ color: 'var(--text-2)' }}>Paste your website URL and Athena will do the rest.</p>
+            <h1 className="heading-md text-center mb-2">Analyse your brand</h1>
+            <p className="body-sm text-center mb-8">Paste your website and Athena handles the rest.</p>
             <div className="flex gap-2">
-              <input value={url} onChange={e => setUrl(e.target.value)} onKeyDown={e => e.key === 'Enter' && start()} placeholder="yoursite.com" className="flex-1 rounded-lg px-4 py-3 text-sm outline-none" style={{ border: '1px solid var(--border)', background: 'var(--bg)', color: 'var(--text)' }} autoFocus />
-              <button onClick={start} disabled={!url.trim()} className="px-5 py-3 rounded-lg text-sm font-semibold text-white disabled:opacity-40" style={{ background: 'var(--accent)' }}>
-                Analyse
-              </button>
+              <input
+                value={url} onChange={e => setUrl(e.target.value)} onKeyDown={e => e.key === 'Enter' && start()}
+                placeholder="yourcompany.com"
+                className="flex-1 px-3 py-2.5 rounded-lg text-sm outline-none transition-colors"
+                style={{ border: '1px solid var(--border)', background: 'var(--bg)' }}
+                autoFocus
+              />
+              <button onClick={start} disabled={!url.trim()} className="btn-primary disabled:opacity-40">Analyse</button>
             </div>
-          </div>
+          </>
         )}
 
         {phase === 'analysing' && (
-          <div>
-            <h2 className="text-xl font-bold mb-6 text-center" style={{ color: 'var(--text)' }}>Analysing {url.replace(/^https?:\/\//, '')}</h2>
-            <div className="space-y-3">
+          <>
+            <h2 className="heading-md text-center mb-6">Analysing {url.replace(/^https?:\/\//, '')}</h2>
+            <div className="space-y-2">
               {STEPS.map((s, i) => {
-                const done = i < stepIdx;
-                const active = i === stepIdx;
+                const done = i < step;
+                const active = i === step;
                 return (
-                  <div key={s.label} className="flex items-center gap-3 p-3 rounded-xl transition-all" style={{ background: active ? 'var(--bg-2)' : 'transparent', border: active ? '1px solid var(--border)' : '1px solid transparent' }}>
-                    <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: done ? 'var(--accent)' : active ? 'var(--bg-2)' : 'var(--surface-2)' }}>
-                      {done ? <CheckCircle size={14} className="text-white" /> : active ? <Loader2 size={14} className="animate-spin" style={{ color: 'var(--accent)' }} /> : <s.icon size={14} style={{ color: 'var(--text-3)' }} />}
+                  <div key={s.label} className="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all"
+                    style={{ background: active ? 'var(--accent-light)' : 'transparent', border: `1px solid ${active ? 'var(--accent)20' : 'transparent'}` }}>
+                    <div className="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0"
+                      style={{ background: done ? 'var(--accent)' : active ? 'var(--accent-light)' : 'var(--bg-alt)' }}>
+                      {done ? <CheckCircle size={13} color="#fff" /> : active ? <Loader2 size={13} className="animate-spin" style={{ color: 'var(--accent)' }} /> : <s.icon size={13} style={{ color: 'var(--text-tertiary)' }} />}
                     </div>
-                    <span className="text-sm font-medium" style={{ color: done ? 'var(--accent)' : active ? 'var(--text)' : 'var(--text-3)' }}>{s.label}</span>
+                    <span className="text-[13px] font-medium" style={{ color: done ? 'var(--accent)' : active ? 'var(--text-primary)' : 'var(--text-tertiary)' }}>{s.label}</span>
                   </div>
                 );
               })}
             </div>
-          </div>
+          </>
         )}
 
         {phase === 'done' && (
           <div className="text-center">
-            <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: 'rgba(0,212,170,0.1)' }}>
-              <CheckCircle size={28} style={{ color: '#00d4aa' }} />
+            <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-5" style={{ background: '#17b16912' }}>
+              <CheckCircle size={24} color="#17b169" />
             </div>
-            <h2 className="text-2xl font-bold mb-2" style={{ color: 'var(--text)' }}>Your brand is ready</h2>
-            <p className="text-sm mb-6" style={{ color: 'var(--text-2)' }}>Athena has built your brand profile, content calendar, and marketing strategy.</p>
-            <button onClick={() => nav('/dashboard')} className="px-6 py-3 rounded-lg text-sm font-semibold text-white" style={{ background: 'var(--accent)' }}>
-              Go to dashboard →
+            <h2 className="heading-md mb-2">Your brand is ready</h2>
+            <p className="body-sm mb-6">Strategy built. Content calendar generated. Let's go.</p>
+            <button onClick={() => nav('/dashboard')} className="btn-primary mx-auto">
+              Open dashboard <ArrowRight size={14} />
             </button>
           </div>
         )}

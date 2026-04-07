@@ -3,7 +3,7 @@ import { useAppStore } from '@/store/appStore';
 import { CalendarDays, ChevronLeft, ChevronRight, Search, Share2, Mail, Target, FileText } from 'lucide-react';
 
 function Card({ children, className = '' }: { children: React.ReactNode; className?: string }) {
-  return <div className={`rounded-xl p-5 ${className}`} style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>{children}</div>;
+  return <div className={`rounded-xl p-5 ${className}`} style={{ background: 'var(--bg)', border: '1px solid var(--border)' }}>{children}</div>;
 }
 
 const CHANNEL_STYLES: Record<string, { color: string; icon: typeof Search }> = {
@@ -52,8 +52,8 @@ export default function Calendar() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>Content Calendar</h1>
-        <p className="text-sm mt-1" style={{ color: 'var(--text-2)' }}>Athena's planned and completed content across all channels</p>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>Content Calendar</h1>
+        <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>Athena's planned and completed content across all channels</p>
       </div>
 
       {/* Legend */}
@@ -61,7 +61,7 @@ export default function Calendar() {
         {Object.entries(CHANNEL_STYLES).map(([key, val]) => (
           <div key={key} className="flex items-center gap-1.5">
             <div className="w-2.5 h-2.5 rounded-full" style={{ background: val.color }} />
-            <span className="text-xs capitalize" style={{ color: 'var(--text-2)' }}>{key}</span>
+            <span className="text-xs capitalize" style={{ color: 'var(--text-secondary)' }}>{key}</span>
           </div>
         ))}
       </div>
@@ -69,11 +69,11 @@ export default function Calendar() {
       <Card>
         {/* Month nav */}
         <div className="flex items-center justify-between mb-6">
-          <button onClick={prev} className="p-2 rounded-lg transition hover:bg-white/5" style={{ color: 'var(--text-2)' }}>
+          <button onClick={prev} className="p-2 rounded-lg transition hover:bg-white/5" style={{ color: 'var(--text-secondary)' }}>
             <ChevronLeft size={16} />
           </button>
-          <span className="text-sm font-semibold" style={{ color: 'var(--text)' }}>{monthName}</span>
-          <button onClick={next} className="p-2 rounded-lg transition hover:bg-white/5" style={{ color: 'var(--text-2)' }}>
+          <span className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>{monthName}</span>
+          <button onClick={next} className="p-2 rounded-lg transition hover:bg-white/5" style={{ color: 'var(--text-secondary)' }}>
             <ChevronRight size={16} />
           </button>
         </div>
@@ -81,7 +81,7 @@ export default function Calendar() {
         {/* Day headers */}
         <div className="grid grid-cols-7 gap-1 mb-2">
           {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(d => (
-            <div key={d} className="text-xs font-medium text-center py-1" style={{ color: 'var(--text-3)' }}>{d}</div>
+            <div key={d} className="text-xs font-medium text-center py-1" style={{ color: 'var(--text-tertiary)' }}>{d}</div>
           ))}
         </div>
 
@@ -92,12 +92,12 @@ export default function Calendar() {
             const isToday = day === new Date().getDate() && month === new Date().getMonth() && year === new Date().getFullYear();
             return (
               <div key={i} className="min-h-[80px] rounded-lg p-1.5 transition" style={{
-                background: day ? 'var(--surface-2)' : 'transparent',
+                background: day ? 'var(--bg-alt)' : 'transparent',
                 border: isToday ? '1px solid var(--accent)' : '1px solid transparent',
               }}>
                 {day && (
                   <>
-                    <span className={`text-xs font-medium block mb-1 ${isToday ? 'glow-text' : ''}`} style={{ color: isToday ? undefined : 'var(--text-3)' }}>{day}</span>
+                    <span className={`text-xs font-medium block mb-1 ${isToday ? 'glow-text' : ''}`} style={{ color: isToday ? undefined : 'var(--text-tertiary)' }}>{day}</span>
                     <div className="space-y-0.5">
                       {events.map((e, j) => {
                         const style = CHANNEL_STYLES[e.channel];

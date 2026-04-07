@@ -4,7 +4,7 @@ import type { AdPlatform } from '@/store/appStore';
 import { Target, DollarSign, Eye, MousePointer, TrendingUp, Pause, Play, Bot, Loader2, ArrowUpRight } from 'lucide-react';
 
 function Card({ children, className = '' }: { children: React.ReactNode; className?: string }) {
-  return <div className={`rounded-xl p-5 ${className}`} style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>{children}</div>;
+  return <div className={`rounded-xl p-5 ${className}`} style={{ background: 'var(--bg)', border: '1px solid var(--border)' }}>{children}</div>;
 }
 
 const PLATFORM_META: Record<AdPlatform, { label: string; color: string }> = {
@@ -53,8 +53,8 @@ export default function Ads() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>Paid Advertising</h1>
-          <p className="text-sm mt-1" style={{ color: 'var(--text-2)' }}>Meta, Google, and TikTok campaign management</p>
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>Paid Advertising</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>Meta, Google, and TikTok campaign management</p>
         </div>
         <button onClick={createCampaign} disabled={generating} className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium" style={{ background: 'var(--accent)', color: '#fff' }}>
           {generating ? <Loader2 size={14} className="animate-spin" /> : <Bot size={14} />}
@@ -71,10 +71,10 @@ export default function Ads() {
         ].map(s => (
           <Card key={s.label}>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs" style={{ color: 'var(--text-3)' }}>{s.label}</span>
+              <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>{s.label}</span>
               <s.icon size={14} style={{ color: s.color }} />
             </div>
-            <p className="text-xl font-bold" style={{ color: 'var(--text)' }}>{s.value}</p>
+            <p className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>{s.value}</p>
           </Card>
         ))}
       </div>
@@ -88,16 +88,16 @@ export default function Ads() {
             <Card key={platform}>
               <div className="flex items-center gap-2 mb-3">
                 <div className="w-2 h-2 rounded-full" style={{ background: meta.color }} />
-                <span className="text-sm font-medium" style={{ color: 'var(--text)' }}>{meta.label}</span>
+                <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>{meta.label}</span>
               </div>
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-lg font-bold" style={{ color: 'var(--text)' }}>{camps.length}</p>
-                  <p className="text-xs" style={{ color: 'var(--text-3)' }}>campaigns</p>
+                  <p className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>{camps.length}</p>
+                  <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>campaigns</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm font-medium" style={{ color: 'var(--text)' }}>£{camps.reduce((a, c) => a + c.spent, 0).toFixed(0)}</p>
-                  <p className="text-xs" style={{ color: 'var(--text-3)' }}>spent</p>
+                  <p className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>£{camps.reduce((a, c) => a + c.spent, 0).toFixed(0)}</p>
+                  <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>spent</p>
                 </div>
               </div>
             </Card>
@@ -107,38 +107,38 @@ export default function Ads() {
 
       {/* Campaign list */}
       <Card>
-        <h3 className="text-sm font-semibold mb-4" style={{ color: 'var(--text)' }}>All Campaigns</h3>
+        <h3 className="text-sm font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>All Campaigns</h3>
         {adCampaigns.length === 0 ? (
           <div className="text-center py-8">
-            <Target size={24} className="mx-auto mb-2" style={{ color: 'var(--text-3)', opacity: 0.3 }} />
-            <p className="text-sm" style={{ color: 'var(--text-3)' }}>No campaigns yet. Click "Create Campaign" to get started.</p>
+            <Target size={24} className="mx-auto mb-2" style={{ color: 'var(--text-tertiary)', opacity: 0.3 }} />
+            <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>No campaigns yet. Click "Create Campaign" to get started.</p>
           </div>
         ) : (
           <div className="space-y-2">
             {adCampaigns.map(c => {
               const meta = PLATFORM_META[c.platform];
               return (
-                <div key={c.id} className="rounded-lg p-4 flex items-center gap-4" style={{ background: 'var(--surface-2)', border: '1px solid var(--border-subtle)' }}>
+                <div key={c.id} className="rounded-lg p-4 flex items-center gap-4" style={{ background: 'var(--bg-alt)', border: '1px solid var(--border-light)' }}>
                   <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: meta.color }} />
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium truncate" style={{ color: 'var(--text)' }}>{c.name}</p>
-                    <p className="text-xs" style={{ color: 'var(--text-3)' }}>{meta.label}</p>
+                    <p className="text-sm font-medium truncate" style={{ color: 'var(--text-primary)' }}>{c.name}</p>
+                    <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>{meta.label}</p>
                   </div>
                   <div className="grid grid-cols-4 gap-6 text-right">
                     <div>
-                      <p className="text-xs" style={{ color: 'var(--text-3)' }}>Budget</p>
-                      <p className="text-sm font-medium" style={{ color: 'var(--text)' }}>£{c.budget}/d</p>
+                      <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>Budget</p>
+                      <p className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>£{c.budget}/d</p>
                     </div>
                     <div>
-                      <p className="text-xs" style={{ color: 'var(--text-3)' }}>Spent</p>
-                      <p className="text-sm font-medium" style={{ color: 'var(--text)' }}>£{c.spent}</p>
+                      <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>Spent</p>
+                      <p className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>£{c.spent}</p>
                     </div>
                     <div>
-                      <p className="text-xs" style={{ color: 'var(--text-3)' }}>ROAS</p>
+                      <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>ROAS</p>
                       <p className="text-sm font-medium" style={{ color: c.roas >= 3 ? '#00D4AA' : c.roas >= 2 ? '#FEBC2E' : '#FF6B6B' }}>{c.roas}x</p>
                     </div>
                     <div>
-                      <button onClick={() => updateAdCampaign(c.id, { status: c.status === 'active' ? 'paused' : 'active' })} className="p-1.5 rounded-lg transition" style={{ background: 'var(--surface-3)' }}>
+                      <button onClick={() => updateAdCampaign(c.id, { status: c.status === 'active' ? 'paused' : 'active' })} className="p-1.5 rounded-lg transition" style={{ background: 'var(--bg-alt)' }}>
                         {c.status === 'active' ? <Pause size={12} style={{ color: '#FEBC2E' }} /> : <Play size={12} style={{ color: '#00D4AA' }} />}
                       </button>
                     </div>

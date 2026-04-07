@@ -3,7 +3,7 @@ import { useAppStore } from '@/store/appStore';
 import { Mail, Plus, Send, Eye, MousePointer, TrendingUp, Bot, Loader2, Clock, CheckCircle } from 'lucide-react';
 
 function Card({ children, className = '' }: { children: React.ReactNode; className?: string }) {
-  return <div className={`rounded-xl p-5 ${className}`} style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>{children}</div>;
+  return <div className={`rounded-xl p-5 ${className}`} style={{ background: 'var(--bg)', border: '1px solid var(--border)' }}>{children}</div>;
 }
 
 export default function Email() {
@@ -45,8 +45,8 @@ export default function Email() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>Email Marketing</h1>
-          <p className="text-sm mt-1" style={{ color: 'var(--text-2)' }}>Campaigns, flows, and subscriber management</p>
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>Email Marketing</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>Campaigns, flows, and subscriber management</p>
         </div>
         <button onClick={generateCampaign} disabled={generating} className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium" style={{ background: 'var(--accent)', color: '#fff' }}>
           {generating ? <Loader2 size={14} className="animate-spin" /> : <Bot size={14} />}
@@ -58,17 +58,17 @@ export default function Email() {
         {stats.map(s => (
           <Card key={s.label}>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs" style={{ color: 'var(--text-3)' }}>{s.label}</span>
+              <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>{s.label}</span>
               <s.icon size={14} style={{ color: s.color }} />
             </div>
-            <p className="text-xl font-bold" style={{ color: 'var(--text)' }}>{s.value}</p>
+            <p className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>{s.value}</p>
           </Card>
         ))}
       </div>
 
       {/* Automated Flows */}
       <Card className="mb-6">
-        <h3 className="text-sm font-semibold mb-4" style={{ color: 'var(--text)' }}>Automated Flows</h3>
+        <h3 className="text-sm font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Automated Flows</h3>
         <div className="grid grid-cols-3 gap-3">
           {[
             { name: 'Welcome Series', emails: 4, subscribers: 420, status: 'active' },
@@ -78,15 +78,15 @@ export default function Email() {
             { name: 'Birthday', emails: 1, subscribers: 4200, status: 'draft' },
             { name: 'VIP Rewards', emails: 2, subscribers: 210, status: 'draft' },
           ].map(f => (
-            <div key={f.name} className="rounded-lg p-3" style={{ background: 'var(--surface-2)', border: '1px solid var(--border-subtle)' }}>
+            <div key={f.name} className="rounded-lg p-3" style={{ background: 'var(--bg-alt)', border: '1px solid var(--border-light)' }}>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium" style={{ color: 'var(--text)' }}>{f.name}</span>
+                <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>{f.name}</span>
                 <span className="text-xs px-2 py-0.5 rounded-full" style={{
-                  background: f.status === 'active' ? 'rgba(0,212,170,0.1)' : 'var(--surface-3)',
-                  color: f.status === 'active' ? '#00D4AA' : 'var(--text-3)',
+                  background: f.status === 'active' ? 'rgba(0,212,170,0.1)' : 'var(--bg-alt)',
+                  color: f.status === 'active' ? '#00D4AA' : 'var(--text-tertiary)',
                 }}>{f.status}</span>
               </div>
-              <div className="flex gap-3 text-xs" style={{ color: 'var(--text-3)' }}>
+              <div className="flex gap-3 text-xs" style={{ color: 'var(--text-tertiary)' }}>
                 <span>{f.emails} emails</span>
                 <span>{f.subscribers.toLocaleString()} subscribers</span>
               </div>
@@ -97,28 +97,28 @@ export default function Email() {
 
       {/* Campaigns */}
       <Card>
-        <h3 className="text-sm font-semibold mb-4" style={{ color: 'var(--text)' }}>Campaigns</h3>
+        <h3 className="text-sm font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Campaigns</h3>
         {emailCampaigns.length === 0 ? (
           <div className="text-center py-8">
-            <Mail size={24} className="mx-auto mb-2" style={{ color: 'var(--text-3)', opacity: 0.3 }} />
-            <p className="text-sm" style={{ color: 'var(--text-3)' }}>No campaigns yet. Click "Generate Campaign" to create one.</p>
+            <Mail size={24} className="mx-auto mb-2" style={{ color: 'var(--text-tertiary)', opacity: 0.3 }} />
+            <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>No campaigns yet. Click "Generate Campaign" to create one.</p>
           </div>
         ) : (
           <div className="space-y-2">
             {emailCampaigns.map(c => (
-              <div key={c.id} className="rounded-lg p-4 flex items-center justify-between" style={{ background: 'var(--surface-2)', border: '1px solid var(--border-subtle)' }}>
+              <div key={c.id} className="rounded-lg p-4 flex items-center justify-between" style={{ background: 'var(--bg-alt)', border: '1px solid var(--border-light)' }}>
                 <div>
-                  <p className="text-sm font-medium" style={{ color: 'var(--text)' }}>{c.name}</p>
-                  <p className="text-xs mt-0.5" style={{ color: 'var(--text-3)' }}>Subject: {c.subject}</p>
+                  <p className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>{c.name}</p>
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--text-tertiary)' }}>Subject: {c.subject}</p>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="text-right">
-                    <p className="text-xs" style={{ color: 'var(--text-3)' }}>{c.recipients.toLocaleString()} recipients</p>
+                    <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>{c.recipients.toLocaleString()} recipients</p>
                     {c.openRate > 0 && <p className="text-xs" style={{ color: '#00D4AA' }}>{c.openRate}% open</p>}
                   </div>
                   <span className="text-xs px-2.5 py-1 rounded-full flex items-center gap-1" style={{
-                    background: c.status === 'sent' ? 'rgba(0,212,170,0.1)' : c.status === 'scheduled' ? 'rgba(124,92,252,0.1)' : 'var(--surface-3)',
-                    color: c.status === 'sent' ? '#00D4AA' : c.status === 'scheduled' ? 'var(--accent-hover)' : 'var(--text-3)',
+                    background: c.status === 'sent' ? 'rgba(0,212,170,0.1)' : c.status === 'scheduled' ? 'rgba(124,92,252,0.1)' : 'var(--bg-alt)',
+                    color: c.status === 'sent' ? '#00D4AA' : c.status === 'scheduled' ? 'var(--accent-dark)' : 'var(--text-tertiary)',
                   }}>
                     {c.status === 'sent' ? <CheckCircle size={10} /> : c.status === 'scheduled' ? <Clock size={10} /> : <Send size={10} />}
                     {c.status}

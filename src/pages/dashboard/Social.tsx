@@ -4,7 +4,7 @@ import type { SocialPlatform } from '@/store/appStore';
 import { Camera, Globe, Briefcase, AtSign, Music, Plus, Clock, CheckCircle, Eye, Heart, MessageCircle, Share, Bot, Loader2 } from 'lucide-react';
 
 function Card({ children, className = '' }: { children: React.ReactNode; className?: string }) {
-  return <div className={`rounded-xl p-5 ${className}`} style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>{children}</div>;
+  return <div className={`rounded-xl p-5 ${className}`} style={{ background: 'var(--bg)', border: '1px solid var(--border)' }}>{children}</div>;
 }
 
 const PLATFORMS: { id: SocialPlatform; label: string; icon: typeof Camera; color: string }[] = [
@@ -53,8 +53,8 @@ export default function Social() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>Social Media</h1>
-          <p className="text-sm mt-1" style={{ color: 'var(--text-2)' }}>Content creation, scheduling, and performance</p>
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>Social Media</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>Content creation, scheduling, and performance</p>
         </div>
         <button onClick={generatePosts} disabled={generating} className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium" style={{ background: 'var(--accent)', color: '#fff' }}>
           {generating ? <Loader2 size={14} className="animate-spin" /> : <Bot size={14} />}
@@ -68,46 +68,46 @@ export default function Social() {
           <Card key={p.id} className="cursor-pointer transition-all hover:scale-[1.02]" onClick={() => setSelectedPlatform(p.id)}>
             <div className="flex items-center gap-2 mb-2">
               <p.icon size={14} style={{ color: p.color }} />
-              <span className="text-xs font-medium" style={{ color: 'var(--text)' }}>{p.label}</span>
+              <span className="text-xs font-medium" style={{ color: 'var(--text-primary)' }}>{p.label}</span>
             </div>
-            <p className="text-lg font-bold" style={{ color: 'var(--text)' }}>{p.posts}</p>
-            <p className="text-xs" style={{ color: 'var(--text-3)' }}>posts</p>
+            <p className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>{p.posts}</p>
+            <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>posts</p>
           </Card>
         ))}
       </div>
 
       {/* Posts */}
       <Card>
-        <h3 className="text-sm font-semibold mb-4" style={{ color: 'var(--text)' }}>
+        <h3 className="text-sm font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>
           {socialPosts.length > 0 ? 'Scheduled & Published Posts' : 'No Posts Yet'}
         </h3>
         {socialPosts.length === 0 ? (
           <div className="text-center py-12">
-            <Share size={32} className="mx-auto mb-3" style={{ color: 'var(--text-3)', opacity: 0.3 }} />
-            <p className="text-sm mb-2" style={{ color: 'var(--text-3)' }}>No social content yet</p>
-            <p className="text-xs" style={{ color: 'var(--text-3)' }}>Click "Generate Week of Content" to create your first batch</p>
+            <Share size={32} className="mx-auto mb-3" style={{ color: 'var(--text-tertiary)', opacity: 0.3 }} />
+            <p className="text-sm mb-2" style={{ color: 'var(--text-tertiary)' }}>No social content yet</p>
+            <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>Click "Generate Week of Content" to create your first batch</p>
           </div>
         ) : (
           <div className="grid grid-cols-2 gap-3">
             {socialPosts.slice(0, 8).map(post => {
               const plat = PLATFORMS.find(p => p.id === post.platform);
               return (
-                <div key={post.id} className="rounded-lg p-4" style={{ background: 'var(--surface-2)', border: '1px solid var(--border-subtle)' }}>
+                <div key={post.id} className="rounded-lg p-4" style={{ background: 'var(--bg-alt)', border: '1px solid var(--border-light)' }}>
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
                       {plat && <plat.icon size={12} style={{ color: plat.color }} />}
-                      <span className="text-xs font-medium" style={{ color: 'var(--text-2)' }}>{plat?.label}</span>
+                      <span className="text-xs font-medium" style={{ color: 'var(--text-secondary)' }}>{plat?.label}</span>
                     </div>
                     <span className="text-xs px-2 py-0.5 rounded-full flex items-center gap-1" style={{
-                      background: post.status === 'published' ? 'rgba(0,212,170,0.1)' : post.status === 'scheduled' ? 'rgba(124,92,252,0.1)' : 'var(--surface-3)',
-                      color: post.status === 'published' ? '#00D4AA' : post.status === 'scheduled' ? 'var(--accent-hover)' : 'var(--text-3)',
+                      background: post.status === 'published' ? 'rgba(0,212,170,0.1)' : post.status === 'scheduled' ? 'rgba(124,92,252,0.1)' : 'var(--bg-alt)',
+                      color: post.status === 'published' ? '#00D4AA' : post.status === 'scheduled' ? 'var(--accent-dark)' : 'var(--text-tertiary)',
                     }}>
                       {post.status === 'scheduled' ? <Clock size={8} /> : <CheckCircle size={8} />}
                       {post.status}
                     </span>
                   </div>
-                  <p className="text-xs leading-relaxed mb-3 line-clamp-4" style={{ color: 'var(--text-2)' }}>{post.content}</p>
-                  <div className="flex items-center gap-4 text-xs" style={{ color: 'var(--text-3)' }}>
+                  <p className="text-xs leading-relaxed mb-3 line-clamp-4" style={{ color: 'var(--text-secondary)' }}>{post.content}</p>
+                  <div className="flex items-center gap-4 text-xs" style={{ color: 'var(--text-tertiary)' }}>
                     <span className="flex items-center gap-1"><Heart size={10} /> {post.engagement.likes}</span>
                     <span className="flex items-center gap-1"><MessageCircle size={10} /> {post.engagement.comments}</span>
                     <span className="flex items-center gap-1"><Eye size={10} /> {post.engagement.reach}</span>
